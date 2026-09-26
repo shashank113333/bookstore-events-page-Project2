@@ -1,0 +1,365 @@
+/* ==========================================================================
+   Monochromatic Corporate Design System
+   Independent Bookstore Events Page (Ticket: ENG-18072)
+   ========================================================================== */
+
+/* 1. Design Tokens (कलर और स्पेसिंग वैरियबल्स) */
+:root {
+  /* कॉर्पोरेट मोनोक्रोम कलर पैलेट (Black, White & Grayscale) */
+  --color-bg-main: #f8f9fa;
+  --color-bg-card: #ffffff;
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-border: #cccccc;
+  --color-border-dark: #222222;
+  
+  --color-primary-bg: #111111;
+  --color-primary-text: #ffffff;
+  --color-primary-hover: #333333;
+
+  /* एरर और रेड बॉर्डर कलर्स (फॉर्म चेकिंग के लिए) */
+  --color-error-bg: #fdeded;
+  --color-error-border: #d32f2f;
+  --color-error-text: #b71c1c;
+
+  /* पैडिंग और मार्जिन स्टेप्स (16px / 32px scale) */
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --container-max-width: 1100px;
+  --border-radius: 4px;
+}
+
+/* 2. ग्लोबल रीसेट और एक्सेसिबिलिटी आउटलाइन */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 100% Lighthouse A11y के लिए हाई कॉन्ट्रास्ट कीबोर्ड फोकस आउटलाइन */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-16);
+}
+
+/* 3. हेडर और फुटर स्टाइलिंग */
+.app-header {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary-text);
+  padding: var(--space-32) 0;
+  border-bottom: 4px solid var(--color-border-dark);
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.app-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.app-subtitle {
+  font-size: 0.95rem;
+  color: #cccccc;
+}
+
+.app-footer {
+  margin-top: auto;
+  background-color: var(--color-primary-bg);
+  color: #cccccc;
+  padding: var(--space-24) 0;
+  text-align: center;
+  font-size: 0.875rem;
+  border-top: 1px solid var(--color-border-dark);
+}
+
+/* 4. सर्च और कंट्रोल सेक्शन */
+main.container {
+  padding-top: var(--space-32);
+  padding-bottom: var(--space-48);
+}
+
+.controls-section {
+  background-color: var(--color-bg-card);
+  padding: var(--space-24);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--space-32);
+}
+
+.search-filter-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-16);
+}
+
+@media (max-width: 768px) {
+  .search-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 5. फॉर्म इनपुट्स और रेड बॉर्डर एरर स्टेट्स */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.required {
+  color: var(--color-error-border);
+  margin-left: 2px;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px var(--space-16);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  transition: border-color 0.2s ease;
+}
+
+/* अमान्य (Invalid) इनपुट को लाल रंग में हाईलाइट करना (Unhappy Path Requirement) */
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border: 2px solid var(--color-error-border) !important;
+  background-color: #fff8f8;
+}
+
+.error-text {
+  font-size: 0.85rem;
+  color: var(--color-error-border);
+  min-height: 1.2em;
+}
+
+/* 6. सेक्शन टाइटल्स और बटन्स */
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: var(--space-16);
+  padding-bottom: var(--space-8);
+  border-bottom: 2px solid var(--color-text-primary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px var(--space-24);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-dark);
+}
+
+.btn-secondary:hover {
+  background-color: #eeeeee;
+}
+
+/* 7. लोडिंग स्पिनर एनिमेशन (Bad Connectivity Support) */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-32);
+  margin-bottom: var(--space-32);
+  background-color: var(--color-bg-card);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e0e0e0;
+  border-top-color: var(--color-text-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: var(--space-16);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* 8. इवेंट्स ग्रिड और कार्ड्स */
+.events-section {
+  margin-bottom: var(--space-48);
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-24);
+}
+
+.event-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.event-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px var(--space-8);
+  background-color: #eeeeee;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid #cccccc;
+}
+
+.event-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.event-description {
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+/* 9. Empty State डिब्बा */
+.empty-state {
+  text-align: center;
+  padding: var(--space-48) var(--space-24);
+  background-color: var(--color-bg-card);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-8);
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--space-8);
+}
+
+.empty-state p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-24);
+}
+
+/* 10. फॉर्म सेक्शन और अलर्ट बॉक्स */
+.add-event-section {
+  background-color: var(--color-bg-card);
+  padding: var(--space-32);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-24);
+  margin-bottom: var(--space-24);
+}
+
+.alert {
+  padding: var(--space-16);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--space-24);
+  font-weight: 600;
+}
+
+.alert-error {
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  color: var(--color-error-text);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}

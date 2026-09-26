@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Independent Bookstore Events Page - Staff Portal">
+  <title>Independent Bookstore Events</title>
+  <!-- CSS स्टाइलशीट को कनेक्ट कर रहे हैं -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 1. हेडर (Header Section) -->
+  <header role="banner" class="app-header">
+    <div class="container header-container">
+      <h1 class="app-title">Independent Bookstore Events</h1>
+      <p class="app-subtitle">Floor Staff Digital Portal & Event Management</p>
+    </div>
+  </header>
+
+  <!-- 2. मुख्य कंटेंट एरिया (Main Area) -->
+  <main id="main-content" role="main" class="container">
+    
+    <!-- सर्च और फ़िल्टर बार -->
+    <section class="controls-section" aria-label="Search and Filter Events">
+      <div class="search-filter-grid">
+        <div class="form-group">
+          <label for="search-input">Search Events</label>
+          <input 
+            type="search" 
+            id="search-input" 
+            placeholder="Search by event title, author, or description..." 
+            aria-label="Search events by title, author, or description"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="category-filter">Filter Category</label>
+          <select id="category-filter" aria-label="Filter events by category">
+            <option value="all">All Categories</option>
+            <option value="Book Signing">Book Signing</option>
+            <option value="Author Q&A">Author Q&A</option>
+            <option value="Reading Club">Reading Club</option>
+            <option value="Children's Storytime">Children's Storytime</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- लोडिंग इंडिकेटर (धीमे इंटरनेट / 3G के लिए) -->
+    <div id="loading-indicator" class="loading-container" role="status" aria-live="polite" aria-label="Loading content" hidden>
+      <div class="spinner"></div>
+      <p class="loading-text">Loading events data...</p>
+    </div>
+
+    <!-- इवेंट्स की लिस्ट और Empty State डिब्बे -->
+    <section class="events-section" aria-label="Events List">
+      <h2 class="section-title">Upcoming Events</h2>
+      
+      <!-- इवेंट्स कार्ड्स यहाँ जावास्क्रिप्ट से लोड होंगे -->
+      <div id="events-grid" class="events-grid" aria-live="polite"></div>
+
+      <!-- डेटा न मिलने पर Empty State (Unhappy Path Requirement) -->
+      <div id="empty-state" class="empty-state" role="alert" aria-live="assertive" hidden>
+        <div class="empty-icon" aria-hidden="true">📭</div>
+        <h3>No data found</h3>
+        <p>No events match your search query or filter criteria. Try resetting your search.</p>
+        <button id="reset-search-btn" class="btn btn-secondary" aria-label="Reset search and filters">Reset Search</button>
+      </div>
+    </section>
+
+    <!-- नया इवेंट जोड़ने का फॉर्म -->
+    <section class="add-event-section" aria-label="Add New Event">
+      <h2 class="section-title">Add New Bookstore Event</h2>
+      
+      <form id="add-event-form" class="event-form" novalidate aria-label="Create a new bookstore event form">
+        
+        <!-- एरर अलर्ट बॉक्स -->
+        <div id="form-error-alert" class="alert alert-error" role="alert" hidden>
+          Please fix the highlighted fields in red before submitting.
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="event-title">Event Title <span class="required" aria-hidden="true">*</span></label>
+            <input 
+              type="text" 
+              id="event-title" 
+              name="title" 
+              required 
+              aria-required="true"
+              aria-describedby="title-error"
+              placeholder="e.g. Modern Fiction Book Club"
+            >
+            <span id="title-error" class="error-text" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="event-author">Author / Host <span class="required" aria-hidden="true">*</span></label>
+            <input 
+              type="text" 
+              id="event-author" 
+              name="author" 
+              required 
+              aria-required="true"
+              aria-describedby="author-error"
+              placeholder="e.g. Shashank Vishwakarma"
+            >
+            <span id="author-error" class="error-text" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="event-date">Date <span class="required" aria-hidden="true">*</span></label>
+            <input 
+              type="date" 
+              id="event-date" 
+              name="date" 
+              required 
+              aria-required="true"
+              aria-describedby="date-error"
+            >
+            <span id="date-error" class="error-text" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="event-time">Time <span class="required" aria-hidden="true">*</span></label>
+            <input 
+              type="time" 
+              id="event-time" 
+              name="time" 
+              required 
+              aria-required="true"
+              aria-describedby="time-error"
+            >
+            <span id="time-error" class="error-text" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="event-category">Category <span class="required" aria-hidden="true">*</span></label>
+            <select 
+              id="event-category" 
+              name="category" 
+              required 
+              aria-required="true"
+              aria-describedby="category-error"
+            >
+              <option value="">-- Select Category --</option>
+              <option value="Book Signing">Book Signing</option>
+              <option value="Author Q&A">Author Q&A</option>
+              <option value="Reading Club">Reading Club</option>
+              <option value="Children's Storytime">Children's Storytime</option>
+            </select>
+            <span id="category-error" class="error-text" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="event-capacity">Seats Capacity <span class="required" aria-hidden="true">*</span></label>
+            <input 
+              type="number" 
+              id="event-capacity" 
+              name="capacity" 
+              min="1" 
+              max="500" 
+              required 
+              aria-required="true"
+              aria-describedby="capacity-error"
+              placeholder="e.g. 50"
+            >
+            <span id="capacity-error" class="error-text" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="event-description">Event Description <span class="required" aria-hidden="true">*</span></label>
+          <textarea 
+            id="event-description" 
+            name="description" 
+            rows="4" 
+            required 
+            aria-required="true"
+            aria-describedby="description-error"
+            placeholder="Provide details about the event..."
+          ></textarea>
+          <span id="description-error" class="error-text" aria-live="polite"></span>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn btn-primary" aria-label="Submit New Event">
+            Create Event
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- फ़ुटर (Footer) -->
+  <footer role="contentinfo" class="app-footer">
+    <div class="container">
+      <p>&copy; 2026 Independent Bookstore Co. • Staff Portal • Ticket ENG-18072</p>
+    </div>
+  </footer>
+
+  <!-- जावास्क्रिप्ट फ़ाइल को लिंक कर रहे हैं -->
+  <script src="app.js"></script>
+</body>
+</html>
