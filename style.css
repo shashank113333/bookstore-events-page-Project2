@@ -1,40 +1,26 @@
-/* ==========================================================================
-   Monochromatic Corporate Design System
-   Independent Bookstore Events Page (Ticket: ENG-18072)
-   ========================================================================== */
-
-/* 1. Design Tokens (कलर और स्पेसिंग वैरियबल्स) */
 :root {
-  /* कॉर्पोरेट मोनोक्रोम कलर पैलेट (Black, White & Grayscale) */
   --color-bg-main: #f8f9fa;
   --color-bg-card: #ffffff;
   --color-text-primary: #111111;
   --color-text-secondary: #555555;
   --color-border: #cccccc;
   --color-border-dark: #222222;
-  
   --color-primary-bg: #111111;
   --color-primary-text: #ffffff;
   --color-primary-hover: #333333;
-
-  /* एरर और रेड बॉर्डर कलर्स (फॉर्म चेकिंग के लिए) */
   --color-error-bg: #fdeded;
   --color-error-border: #d32f2f;
   --color-error-text: #b71c1c;
-
-  /* पैडिंग और मार्जिन स्टेप्स (16px / 32px scale) */
   --space-8: 8px;
   --space-16: 16px;
   --space-24: 24px;
   --space-32: 32px;
   --space-48: 48px;
-
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --container-max-width: 1100px;
   --border-radius: 4px;
 }
 
-/* 2. ग्लोबल रीसेट और एक्सेसिबिलिटी आउटलाइन */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -52,7 +38,6 @@ body {
   flex-direction: column;
 }
 
-/* 100% Lighthouse A11y के लिए हाई कॉन्ट्रास्ट कीबोर्ड फोकस आउटलाइन */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -69,7 +54,6 @@ textarea:focus-visible {
   padding: 0 var(--space-16);
 }
 
-/* 3. हेडर और फुटर स्टाइलिंग */
 .app-header {
   background-color: var(--color-primary-bg);
   color: var(--color-primary-text);
@@ -103,7 +87,6 @@ textarea:focus-visible {
   border-top: 1px solid var(--color-border-dark);
 }
 
-/* 4. सर्च और कंट्रोल सेक्शन */
 main.container {
   padding-top: var(--space-32);
   padding-bottom: var(--space-48);
@@ -129,7 +112,6 @@ main.container {
   }
 }
 
-/* 5. फॉर्म इनपुट्स और रेड बॉर्डर एरर स्टेट्स */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -168,7 +150,6 @@ textarea {
   transition: border-color 0.2s ease;
 }
 
-/* अमान्य (Invalid) इनपुट को लाल रंग में हाईलाइट करना (Unhappy Path Requirement) */
 input.invalid,
 select.invalid,
 textarea.invalid {
@@ -182,7 +163,6 @@ textarea.invalid {
   min-height: 1.2em;
 }
 
-/* 6. सेक्शन टाइटल्स और बटन्स */
 .section-title {
   font-size: 1.35rem;
   font-weight: 700;
@@ -223,7 +203,6 @@ textarea.invalid {
   background-color: #eeeeee;
 }
 
-/* 7. लोडिंग स्पिनर एनिमेशन (Bad Connectivity Support) */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -255,7 +234,6 @@ textarea.invalid {
   color: var(--color-text-secondary);
 }
 
-/* 8. इवेंट्स ग्रिड और कार्ड्स */
 .events-section {
   margin-bottom: var(--space-48);
 }
@@ -306,7 +284,6 @@ textarea.invalid {
   flex-grow: 1;
 }
 
-/* 9. Empty State डिब्बा */
 .empty-state {
   text-align: center;
   padding: var(--space-48) var(--space-24);
@@ -331,7 +308,6 @@ textarea.invalid {
   margin-bottom: var(--space-24);
 }
 
-/* 10. फॉर्म सेक्शन और अलर्ट बॉक्स */
 .add-event-section {
   background-color: var(--color-bg-card);
   padding: var(--space-32);

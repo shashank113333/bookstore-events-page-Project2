@@ -1,12 +1,4 @@
-/**
- * Independent Bookstore Events Page - Core Logic
- * Ticket ID: ENG-18072
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // ==========================================
-  // 1. शुरुआती डेटा (Initial Events Data)
-  // ==========================================
   let eventsList = [
     {
       id: 'evt-1',
@@ -39,8 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       description: 'Interactive storytelling session for children aged 4-10 with crafts and picture book readings.'
     }
   ];
-
-  // DOM एलिमेंट्स को सेलेक्ट करना
   const eventsGrid = document.getElementById('events-grid');
   const emptyState = document.getElementById('empty-state');
   const loadingIndicator = document.getElementById('loading-indicator');
@@ -49,59 +39,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetSearchBtn = document.getElementById('reset-search-btn');
   const addEventForm = document.getElementById('add-event-form');
   const formErrorAlert = document.getElementById('form-error-alert');
-
-  // ==========================================
-  // 2. XSS Input Sanitization (सुरक्षा NFR)
-  // ==========================================
-  /**
-   * हानिकारक HTML कोड को हटाकर इनपुट को सेफ बनाता है
-   */
   function sanitizeInput(str) {
     if (typeof str !== 'string') return '';
     const tempDiv = document.createElement('div');
     tempDiv.textContent = str;
     return tempDiv.innerHTML.trim();
   }
-
-  // ==========================================
-  // 3. Telemetry Analytics Simulation (NFR)
-  // ==========================================
-  /**
-   * ब्राउज़र कंसोल में एनालिटिक्स मैसेज प्रिंट करता है
-   */
   function logTelemetry(actionDetail) {
     console.log(`[Analytics] User interacted with Independent Bookstore Events Page - ${actionDetail}`);
   }
-
-  // पेज लोड होने पर एनालिटिक्स पिंग
   logTelemetry('Initial Page Load Completed');
-
-  // ==========================================
-  // 4. Async Loading Simulation (Bad Connectivity Support)
-  // ==========================================
-  /**
-   * धीमे इंटरनेट ऑपरेशन्स के दौरान स्पिनर दिखाता है
-   */
   function simulateAsyncOperation(callback) {
     loadingIndicator.hidden = false;
     eventsGrid.style.opacity = '0.3';
-    
-    // 3G कनेक्शन की लेटेंसी सिमुलेट करना (400ms)
     setTimeout(() => {
       loadingIndicator.hidden = true;
       eventsGrid.style.opacity = '1';
       if (callback) callback();
     }, 400);
   }
-
-  // ==========================================
-  // 5. इवेंट्स रेंडर करना और Empty State हैंडलिंग
-  // ==========================================
   function renderEvents() {
     const query = searchInput.value.toLowerCase().trim();
     const selectedCategory = categoryFilter.value;
-
-    // फिल्टर लॉजिक
     const filteredEvents = eventsList.filter(evt => {
       const matchesSearch = 
         evt.title.toLowerCase().includes(query) ||
@@ -114,8 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     eventsGrid.innerHTML = '';
-
-    // Empty State Handling (Unhappy Path Requirement)
     if (filteredEvents.length === 0) {
       emptyState.hidden = false;
       eventsGrid.hidden = true;
@@ -124,8 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     emptyState.hidden = true;
     eventsGrid.hidden = false;
-
-    // इवेंट कार्ड्स बनाना
     filteredEvents.forEach(evt => {
       const card = document.createElement('article');
       card.className = 'event-card';
@@ -146,12 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // शुरुआत में इवेंट्स रेंडर करना
-  renderEvents();
-
-  // ==========================================
-  // 6. सर्च और फ़िल्टर इवेंट लिसनर्स
-  // ==========================================
+renderEvents();
   let debounceTimer;
   searchInput.addEventListener('input', () => {
     clearTimeout(debounceTimer);
@@ -172,10 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     logTelemetry('Reset Search & Filters Clicked');
     simulateAsyncOperation(renderEvents);
   });
-
-  // ==========================================
-  // 7. फॉर्म वैलिडेशन और Red Highlighting (Unhappy Path)
-  // ==========================================
   const formFields = [
     { id: 'event-title', name: 'Title', errorId: 'title-error' },
     { id: 'event-author', name: 'Author / Host', errorId: 'author-error' },
@@ -226,8 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return isValid;
   }
-
-  // टाइप करते ही लाल बॉर्डर हटाना
   formFields.forEach(field => {
     const inputEl = document.getElementById(field.id);
     if (inputEl) {
@@ -240,8 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-
-  // फॉर्म सबमिशन
   addEventForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -250,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // सैनिटाइज्ड वैल्यूज निकालना
     const newEvent = {
       id: `evt-${Date.now()}`,
       title: sanitizeInput(document.getElementById('event-title').value.trim()),
