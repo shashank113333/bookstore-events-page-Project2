@@ -154,7 +154,7 @@ renderEvents();
 
       if (!val) {
         isValid = false;
-        if (inputEl) inputEl.classList.add('invalid'); // इनपुट पर लाल बॉर्डर लगाना
+        if (inputEl) inputEl.classList.add('invalid'); 
         if (errorSpan) errorSpan.textContent = `${field.name} is required.`;
         if (!firstInvalidInput) firstInvalidInput = inputEl;
       } else if (field.id === 'event-capacity' && (isNaN(val) || Number(val) <= 0)) {
