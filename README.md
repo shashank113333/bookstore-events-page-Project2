@@ -22,4 +22,4 @@ A digital events management portal built for bookstore floor staff to view, sear
 - Vanilla JavaScript (ES6)
 
 ## 🚀 Live Demo
-- **Deployed URL:** [Your Vercel URL Here]
+- **Deployed URL:** [(https://bookstore-events-page-project2.vercel.app/)]
